@@ -1,0 +1,5 @@
+ <launch>
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find tutorial_gazebo)/config/wifibot.rviz"/>
+
+</launch>

@@ -1,0 +1,104 @@
+#!/usr/bin/env python
+
+import roslib;
+import rospy
+from geometry_msgs.msg import Twist
+import sys, select, termios, tty
+msg = """
+Control r6bot!
+---------------------------
+Translational motion:
+   f  /  b : forward and backward in x direction
+   l  /  r : left and right in y direction
+   u  /  d : up and down in z direction .
+Rotational motion:
+   a  /  h : rotation about x direction
+   c  /  i : rotation about y direction
+   e  /  j : rotation about z direction .
+anything else : stop
+CTRL-C to quit
+"""
+moveBindings = {
+        'f':(1,0,0),
+        'b':(-1,0,0),
+        'l':(0,1,0),
+        'r':(0,-1,0),
+        'u':(0,0,1),
+        'd':(0,0,-1),
+           }
+rotateBindings={
+        'a':(1,0,0),
+        'h':(-1,0,0),
+        'c':(0,1,0),
+        'i':(0,-1,0),
+        'e':(0,0,1),
+        'j':(0,0,-1),
+          }
+def getKey():
+    tty.setraw(sys.stdin.fileno())
+    select.select([sys.stdin], [], [], 0)
+    key = sys.stdin.read(1)
+    termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
+    return key
+speed = .1
+turn = 0.05
+def vels(speed,turn):
+    return "currently:\tspeed %s\tturn %s " % (speed,turn)
+if __name__=="__main__":
+    settings = termios.tcgetattr(sys.stdin)
+   
+    pub = rospy.Publisher('cmd_vel', Twist)
+    rospy.init_node('posture_teleop')
+    x = 0
+    y = 0
+    z = 0
+    roll = 0
+    pitch = 0
+    yaw = 0
+    status = 0
+    try:
+        print msg
+        print vels(speed,turn)
+        while(1):
+            key = getKey()
+            if key in moveBindings.keys():
+                x = moveBindings[key][0]
+                y = moveBindings[key][1]
+                z = moveBindings[key][2]
+                roll = 0
+                pitch = 0
+                yaw = 0
+            elif key in rotateBindings.keys():
+                roll = rotateBindings[key][0]
+                pitch = rotateBindings[key][1]
+                yaw = rotateBindings[key][2]
+                x = 0
+                y = 0
+                z = 0
+                
+                if (status == 14):
+                    print msg
+                status = (status + 1) % 15
+            else:
+                x = 0
+                y = 0
+                z = 0
+                roll = 0
+                pitch = 0
+                yaw = 0
+                status = 0
+                if (key == '\x03'):
+                    break
+            twist = Twist()
+            twist.linear.x = x*speed; twist.linear.y = y*speed; twist.linear.z = z*speed
+            twist.angular.x = roll*turn; twist.angular.y = pitch*turn; twist.angular.z = yaw*turn
+            pub.publish(twist)
+    except:
+        print e
+    finally:
+        twist = Twist()
+        twist.linear.x = 0; twist.linear.y = 0; twist.linear.z = 0
+        twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = 0
+        pub.publish(twist)
+    termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
+

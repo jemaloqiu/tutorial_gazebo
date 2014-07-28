@@ -1,0 +1,85 @@
+#!/usr/bin/env python
+##
+# Copyright (c) 2013, Non-A Team, INRIA Lille-Nord Europe
+# All rights reserved.
+# Author : zhaopeng qiu
+##
+import roslib; roslib.load_manifest('move_base')
+import roslib.packages 
+import rospy
+import numpy as np
+from geometry_msgs.msg import PoseStamped
+#print roslib.packages.get_pkg_dir('move_base_msgs')
+
+from move_base_msgs.msg import MoveBaseActionFeedback
+import sys, select, termios, tty
+import time
+
+msg = """
+Multi-goals starts!
+"""
+                                       
+                                        
+goals = np.array( [ (0.8, 0.95, 0.0), 
+                	(1.92, 0.6, 0.0) ] )
+
+
+nb_goal = goals.shape[0]
+current_x = 0.0
+current_y = 0.0
+goal = PoseStamped()
+initialized = False
+i = 0
+
+
+def mb_callback(msg):
+        global current_x
+        global current_y
+        current_x = msg.feedback.base_position.pose.position.x
+        current_y = msg.feedback.base_position.pose.position.y
+
+        
+if __name__=="__main__":
+    #settings = termios.tcgetattr(sys.stdin)
+   
+    pub = rospy.Publisher('move_base_simple/goal', PoseStamped)
+    rospy.init_node('multi-goals')
+    sub = rospy.Subscriber('move_base/feedback', MoveBaseActionFeedback, mb_callback)
+
+    time.sleep(3)
+        
+    try:
+        print msg
+ 
+        x = goals[0][0]
+        y = goals[0][1]
+
+        goal.header.frame_id = "map"
+        goal.header.stamp = rospy.Time.now()
+        goal.pose.position.x = x
+        goal.pose.position.y = y
+        goal.pose.orientation.x = 0
+        goal.pose.orientation.y = 0
+        goal.pose.orientation.z = 0
+        goal.pose.orientation.w = 1
+        pub.publish(goal)
+
+        time.sleep(3)
+
+        x = goals[1][0]
+        y = goals[1][1]
+        goal.header.frame_id = "map"
+        goal.header.stamp = rospy.Time.now()
+        goal.pose.position.x = x
+        goal.pose.position.y = y
+        goal.pose.orientation.x = 0
+        goal.pose.orientation.y = 0
+        goal.pose.orientation.z = 0
+        goal.pose.orientation.w = 1
+        pub.publish(goal)
+    except:
+        print e
+    finally:
+        pass
+
+

@@ -1,0 +1,15 @@
+<launch>
+
+  <include file="$(find tutorial_gazebo)/launch/wifibot.launch"/>
+
+<!-- Run the map server -->
+  <arg name="map_file" default="$(find tutorial_gazebo)/maps/inria.yaml"/>
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+
+  <!--- Run AMCL -->
+  <include file="$(find tutorial_gazebo)/config/wifibot/amcl_wifibot.launch" />
+
+  <include file="$(find tutorial_gazebo)/config/wifibot/move_base_wifibot.launch" />
+
+
+</launch>

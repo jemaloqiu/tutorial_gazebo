@@ -1,0 +1,13 @@
+<launch>
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <param name="base_local_planner" value="optim_local_planner/OptimPlannerROS" />
+    <!--param name="base_global_planner" value="ompl_planner_base/OMPLPlannerBase" />
+    <param name="global_planner_type" value="RRT" /-->
+    <rosparam file="$(find tutorial_gazebo)/config/wifibot/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find tutorial_gazebo)/config/wifibot/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find tutorial_gazebo)/config/wifibot/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find tutorial_gazebo)/config/wifibot/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find tutorial_gazebo)/config/wifibot/base_local_planner_params.yaml" command="load" />
+  </node>
+
+</launch>

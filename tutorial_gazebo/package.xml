@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package>
+  <name>tutorial_gazebo</name>
+  <version>0.0.0</version>
+  <description>This package includes several examples in which I want to show how to build worlds and robots, how to realize simulations and how to use plugins and controllers </description>
+
+  <maintainer email="qiuzhaopeng@gmail.com">Zhaopeng QIU</maintainer>
+
+  <license>BSD</license>
+
+  <author email="qiuzhaopeng@gmail.com">Zhaopeng QIU</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <export>
+  </export>
+</package>

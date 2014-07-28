@@ -1,0 +1,139 @@
+#!/usr/bin/env python
+##
+# Copyright (c) 2013, Non-A Team, INRIA Lille-Nord Europe
+# All rights reserved.
+# Author : zhaopeng qiu
+##
+import roslib; roslib.load_manifest('move_base')
+import roslib.packages 
+import rospy
+import numpy as np
+from geometry_msgs.msg import PoseStamped
+#print roslib.packages.get_pkg_dir('move_base_msgs')
+
+from move_base_msgs.msg import MoveBaseActionFeedback
+import sys, select, termios, tty
+import time
+
+
+#new_ref = np.genfromtxt("/home/qiu/test/data.txt")
+
+#print new_ref
+
+#dx = new_ref[0]
+#dy = new_ref[1]
+#dyaw = new_ref[2]
+
+msg = """
+Goal loop starts!
+"""
+
+#
+#goals = np.array( [ (2.709, -4.488, 0.0), 
+#                                       (3.127, -7.163, 0.0), 
+#                                       (4.281, -7.646, 0.0),
+#                                       (8.422, -5.839, 0.0),
+#                                       (5.728, -2.822, 0.0) ] )
+##
+                                        
+                                        
+#goals = np.array( [ (1, 1.0, 0.0), 
+#                    (1.0, -1.0, 0.0), 
+#                    (-0, 0.2, 0.0) ] )
+                   # (-4, -3.0, 0.0),
+                   # (-4, 3.0, 0.0)
+goals = np.array( [ (6.059, -1.87, 0.0), 
+                       (5.508, -2.094, 0.0), 
+                       (4.066, -1.238, 0.0),
+                       (4.207, -2.211, 0.0),
+                       (3.389, -1.164, 0.0),
+                       (1.643, -1.16, 0.0),
+                       (1.520, -1.980, 0.0),
+                       (0.962, -2.20, 0.0), 
+                       (0.40, 0.0, 0.0),
+                        (1.0, 0.9, 0.0), 
+                	      (2.0, 0.4, 0.0),
+                        (3.3, 0.1, 0.0),
+                        (4.1, 0.9, 0.0),
+                        (5.7, 1.0, 0.0),  
+                	      (6.5, 0.0, 0.0),
+                        (5.8, 0.1, 0.0) ] )
+
+
+nb_goal = goals.shape[0]
+current_x = 0.0
+current_y = 0.0
+goal = PoseStamped()
+initialized = False
+inverse = False
+i = 9
+
+
+def mb_callback(msg):
+        global current_x
+        global current_y
+        current_x = msg.feedback.base_position.pose.position.x
+        current_y = msg.feedback.base_position.pose.position.y
+        #print current_x
+        #print current_y
+        
+if __name__=="__main__":
+    #settings = termios.tcgetattr(sys.stdin)
+   
+    pub = rospy.Publisher('move_base_simple/goal', PoseStamped)
+    rospy.init_node('goal_loop')
+    sub = rospy.Subscriber('move_base/feedback', MoveBaseActionFeedback, mb_callback)
+
+    time.sleep(3)
+        
+    try:
+        print msg
+ 
+        while(1):
+            time.sleep(0.2)
+            x = goals[i][0]
+            y = goals[i][1]
+            if not initialized:
+                    goal.header.frame_id = "map"
+                    goal.header.stamp = rospy.Time.now()
+                    goal.pose.position.x = x
+                    goal.pose.position.y = y
+                    goal.pose.orientation.x = 0
+                    goal.pose.orientation.y = 0
+                    goal.pose.orientation.z = 0
+                    goal.pose.orientation.w = 1
+                    pub.publish(goal)
+                    initialized = True
+            
+            dist = (current_x - x)*(current_x - x) + (current_y- y)*(current_y- y)
+            #print "current distance is :"
+            #print dist
+
+            if dist < 0.09 and initialized:
+                    if not inverse:
+                            i = i+1
+                    else:
+                            i = i-1
+                    if i == (nb_goal-1):
+                            inverse = True
+                            print "inverse the loop"
+                    if i == 0:
+                            inverse = False
+                            print "revert the loop"
+                    x = goals[i][0]
+                    y = goals[i][1]
+                    goal.header.frame_id = "map"
+                    goal.header.stamp = rospy.Time.now()
+                    goal.pose.position.x = x
+                    goal.pose.position.y = y
+                    goal.pose.orientation.x = 0
+                    goal.pose.orientation.y = 0
+                    goal.pose.orientation.z = 0
+                    goal.pose.orientation.w = 1
+                    pub.publish(goal)
+    except:
+        print "error"
+    finally:
+        pass
+
+
