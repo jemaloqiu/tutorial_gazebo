@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package>
+  <name>wifibot_controller</name>
+  <version>0.0.0</version>
+  <description>The motion controller package for wifibot in gazebo simulations</description>
+  <maintainer email="qiuzhaopeng@gmail.com">Zhaopeng QIU</maintainer>
+
+  <license>BSD</license>
+
+  <author email="qiuzhaopeng@gmail.com">Zhaopeng QIU</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+
+  <build_depend>gazebo_plugins</build_depend> 
+  <build_depend>gazebo_ros</build_depend> 
+  <build_depend>bullet</build_depend> 
+
+  <run_depend>tutorial_gazebo</run_depend> 
+  <run_depend>gazebo_plugins</run_depend> 
+  <run_depend>gazebo_ros</run_depend> 
+  <run_depend>bullet</run_depend> 
+
+
+  <export>
+    <cpp cflags="-I${prefix}/cfg/cpp -I${prefix}/include" lflags="-Wl,-rpath,${prefix}/lib -L${prefix}/lib" />
+    <gazebo plugin_path="${prefix}/lib" gazebo_media_path="${prefix}" />
+  </export>
+</package>
