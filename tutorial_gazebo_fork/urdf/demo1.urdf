@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+
+<!-- root tag, a name should be specified for the robot model -->
+<robot name="demo1">    									
+
+<!-- link tag, a name should be specified for the link -->
+<link name="link1">	
+
+    <visual>	<!-- visual tag, visual properties of link 1: shape, pose -->
+      <origin xyz="0 0 0.0" rpy="0 0 0" />
+      <geometry>
+         <box size="0.5 0.5 0.2" />
+      </geometry>
+    </visual>
+
+    <collision>  <!-- collision tag, shape/pose of link 1 for collisions -->
+      <origin xyz="0 0 0.0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.5 0.5 0.2" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="link2">
+    <visual>
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+      <geometry>
+		 <box size="0.2 0.2 0.5" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.0 0.0 0" rpy="0 0 0" />
+      <geometry>
+	<box size="0.0004 0.004 0.0004" />
+      </geometry>
+    </collision>
+  </link>
+
+<!-- Define a joint between the two links , see http://wiki.ros.org/urdf/XML/joint for complete introduction of joint -->
+<!-- Tags include: <origin> <parent> <child> <axis> <calibration> <dynamics> <limit> <mimic> <safety_controller>  -->
+<!-- types: revolute, continuous, prismatic, fixed, floating, planar -->
+  <joint name="joint_1_2" type="fixed">            
+    
+    <!-- origin: joint position expressed in body frame of parent link, this tag is optional: defaults to identity if not specified -->
+    <origin xyz="0 0 0.35" rpy="0 0 0" />           
+    
+    <!-- required tag: parent link of the joint -->
+    <parent link="link1"/>
+
+    <!-- required tag: child link of the joint -->				
+    <child link="link2" />
+  </joint>
+
+
+</robot>

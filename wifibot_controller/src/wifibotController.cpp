@@ -102,7 +102,7 @@ void WifibotControllerPlugin::Load(physics::ModelPtr _parent, sdf::ElementPtr _s
   this->callback_queue_thread_ = boost::thread(boost::bind(&WifibotControllerPlugin::QueueThread, this));
 
   // listen to the update event (broadcast every simulation iteration)
-  this->updateConnection = event::Events::ConnectWorldUpdateStart(boost::bind(&WifibotControllerPlugin::UpdateChild, this));
+  this->updateConnection = event::Events::ConnectWorldUpdateBegin(boost::bind(&WifibotControllerPlugin::UpdateChild, this));
 }
 
 

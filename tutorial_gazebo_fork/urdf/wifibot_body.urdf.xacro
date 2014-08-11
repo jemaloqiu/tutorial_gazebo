@@ -1,0 +1,399 @@
+<?xml version="1.0"?>
+<robot name="wifibot_model" xmlns:xacro="http://ros.org/wiki/xacro">
+  <property name="M_PI" value="3.14159"/>
+  <property name="R_wheel" value="0.095"/>
+  <property name="W_wheel" value="0.08"/>
+
+  <!-- Macro for wifibot body. -->
+  <!-- Import Rviz colors -->
+  <xacro:include filename="$(find tutorial_gazebo)/urdf/materials.xacro" />
+  <property name="base_z" value="0.08" />
+  
+  <xacro:macro name="wifibot_body">
+
+  <link name="base_footprint">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.001 0.001 0.001" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.1" rpy="0 0 0" />
+      <geometry>
+       <box size="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="base_link">
+    <inertial>
+      <mass value="2" />
+      <origin xyz="0 0 0" />
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0"
+        iyy="0.01" iyz="0.0" izz="0.5" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+			<box size="0.32 0.3 0.06" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+	<box size="0.0004 0.004 0.0004" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="base_footprint_joint" type="fixed">
+    <origin xyz="0 0 ${R_wheel}" rpy="0 0 0" />        
+    <parent link="base_footprint"/>
+    <child link="base_link" />
+  </joint>
+
+
+<link name="center_box">
+    <inertial>
+      <mass value="0.01" />
+      <origin xyz="0 0 0" />
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0"
+        iyy="0.01" iyz="0.0" izz="0.5" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+			<box size="0.2 0.2 0.09" />
+      </geometry>
+    <material name="orange" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+		<box size="0.0004 0.004 0.0004" />
+      </geometry>
+    </collision>
+  </link>
+
+<joint name="center_box_joint" type="fixed">
+    <origin xyz="0 0 0.07" rpy="0 0 0" />        
+    <parent link="base_link"/>
+    <child link="center_box" />
+  </joint>
+
+ <link name="left_f_wheel_link">
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="0.01" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+        iyy="0.001" iyz="0.0" izz="0.001" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 1.5707 1.5707" />
+      <geometry>
+        <cylinder radius="${R_wheel}" length = "${W_wheel}"/>
+      </geometry>
+         <material name="black" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 1.5707 1.5707" />
+      <geometry>
+        <cylinder radius="${R_wheel}" length = "0.023"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="left_f_wheel_joint" type="fixed">
+    <origin xyz="0.11 0.2 0.0" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="left_f_wheel_link"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <link name="right_f_wheel_link">
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="0.01" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+        iyy="0.001" iyz="0.0" izz="0.001" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 1.5707 1.5707" />
+      <geometry>
+        <cylinder radius="${R_wheel}" length = "${W_wheel}"/>
+      </geometry>
+         <material name="black" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 1.5707 1.5707" />
+      <geometry>
+        <cylinder radius="${R_wheel}" length = "0.023"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="right_f_wheel_joint" type="fixed">
+    <origin xyz="0.11 -0.2 0.0" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="right_f_wheel_link"/>
+  </joint>
+
+
+<link name="left_r_wheel_link">
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="0.01" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+        iyy="0.001" iyz="0.0" izz="0.001" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 1.5707 1.5707" />
+      <geometry>
+        <cylinder radius="${R_wheel}" length = "${W_wheel}"/>
+      </geometry>
+         <material name="black" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 1.5707 1.5707" />
+      <geometry>
+        <cylinder radius="${R_wheel}" length = "0.023"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="left_r_wheel_joint" type="fixed">
+    <origin xyz="-0.11 0.2 0.0" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="left_r_wheel_link"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <link name="right_r_wheel_link">
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="0.01" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+        iyy="0.001" iyz="0.0" izz="0.001" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 1.5707 1.5707" />
+      <geometry>
+        <cylinder radius="${R_wheel}" length = "${W_wheel}"/>
+      </geometry>
+         <material name="black" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 1.5707 1.5707" />
+      <geometry>
+        <cylinder radius="${R_wheel}" length = "0.023"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="right_r_wheel_joint" type="fixed">
+    <origin xyz="-0.11 -0.2 0.0" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="right_r_wheel_link"/>
+  </joint>
+
+
+<link name="plate">
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="0.1" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+        iyy="0.001" iyz="0.0" izz="0.001" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.23 0.23 0.012" />
+      </geometry>
+      <material name="orange" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0.5" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.035" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="plate_joint" type="fixed">
+    <origin xyz="0.0 0 0.12" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="plate"/>
+  </joint>
+
+<link name="round_plate">
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="0.1" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+        iyy="0.001" iyz="0.0" izz="0.001" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.1" length="0.012" />
+      </geometry>
+         <material name="orange" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0.5" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.03" length="0.012" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="round_plate_joint" type="fixed">
+    <origin xyz="0.045 0 0.12" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="round_plate"/>
+  </joint>
+
+  <link name="camera_pod_link">
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="0.1" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+        iyy="0.001" iyz="0.0" izz="0.001" />
+    </inertial>
+     <visual>
+      <origin xyz="0 0 0.0" rpy="0 0 0"/>
+      <geometry>    
+        <sphere radius="0.00028" />
+      </geometry>
+    </visual>
+	
+    <collision>
+      <origin xyz="0 0 0.5" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.035" />
+      </geometry>
+    </collision>
+   
+  </link>
+
+  <joint name="camera_pod_joint" type="fixed">
+    <origin xyz="0.095 0.065 0.075" rpy="0 0 0"/>
+    <parent link="plate"/>
+    <child link="camera_pod_link"/>
+  </joint>
+
+
+ <link name="camera_visu">
+    <inertial>
+      <origin xyz="0.1350 -0.06 -0.03"/>
+      <mass value="0.1" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+        iyy="0.001" iyz="0.0" izz="0.001" />
+    </inertial>
+    <visual>
+      <!--origin xyz="0 0 0.0" rpy="0 0 0"/-->
+      <origin xyz="0.1350 -0.06 -0.03" rpy="0 0 ${M_PI/2}"/>
+      <geometry>
+			<mesh filename="package://tutorial_gazebo/meshes/camera.dae" scale="0.015 0.015 0.015"/>
+      <!--geometry>
+        <cylinder radius="0.02" length = "0.05"/-->
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.1350 -0.06 0.0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.003" length = "0.023"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="camera_visu_joint" type="fixed">
+    <origin xyz="0.09 0.065 0.03" rpy="0 0 0"/>
+    <parent link="plate"/>
+    <child link="camera_visu"/>
+  </joint>
+
+   <link name="laser_visu">
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="0.01" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+        iyy="0.001" iyz="0.0" izz="0.001" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://tutorial_gazebo/meshes/hokuyo_utm_30lx.dae" scale="0.757 0.757 0.757"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+     <geometry>
+        <box size="0.024 0.024 0.024" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="laser_visu_joint" type="fixed">
+    <origin xyz="0.1 0 0.035" rpy="0 0 0" />
+    <parent link="plate" />
+    <child link="laser_visu" />
+  </joint>
+
+   <link name="laser">
+    <visual>
+      <geometry>
+        <box size="0.04 0.04 0.02" />
+      </geometry>
+    </visual>
+    <inertial>
+      <mass value="0.001" />
+      <origin xyz="0 0 0" />
+      <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+        iyy="0.0001" iyz="0.0"
+        izz="0.0001" />
+    </inertial>
+  </link>
+
+  <joint name="laser_joint" type="fixed">
+    <origin xyz="0.1 0 0.03" rpy="0 0 0" />
+    <parent link="plate" />
+    <child link="laser" />
+  </joint>
+
+<!--Painting color for all the joints-->
+  <gazebo reference="right_f_wheel_link">
+   <material>Gazebo/Black</material>
+  </gazebo>
+  <gazebo reference="right_r_wheel_link">
+   <material>Gazebo/Black</material>
+  </gazebo>
+  <gazebo reference="left_f_wheel_link">
+   <material>Gazebo/Black</material>
+  </gazebo>
+  <gazebo reference="left_r_wheel_link">
+   <material>Gazebo/Black</material>
+  </gazebo>
+  <gazebo reference="base_footprint">
+   <material>Gazebo/Black</material>
+  </gazebo>
+  <gazebo reference="base_link">
+   <material>Gazebo/Blue</material>
+  </gazebo>
+  <gazebo reference="center_box">
+   <material>Gazebo/Orange</material>
+  </gazebo>
+  <gazebo reference="plate">
+   <material>Gazebo/Gold</material>
+  </gazebo>
+  <gazebo reference="round_plate">
+   <material>Gazebo/Gold</material>
+  </gazebo>
+
+  </xacro:macro>
+</robot>

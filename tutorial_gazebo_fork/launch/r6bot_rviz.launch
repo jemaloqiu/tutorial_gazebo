@@ -1,0 +1,15 @@
+<launch>
+
+  <!-- load configuration -->
+  <rosparam command="load" file="$(find joint_state_controller)/joint_state_controller.yaml" />
+  <node name="joint_state_controller_spawner" pkg="controller_manager" type="spawner" output="screen" args="joint_state_controller" />
+
+
+  <!-- Combine joint values -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
+
+  <!-- Show in Rviz   -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find tutorial_gazebo)/config/r6bot.rviz"/>
+
+</launch>
+

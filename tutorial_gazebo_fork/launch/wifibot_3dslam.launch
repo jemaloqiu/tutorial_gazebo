@@ -1,0 +1,5 @@
+<launch>
+
+  <!-- include file="$(find tutorial_gazebo)/launch/wifibot.launch"/-->
+  <!--include file="$(find tutorial_gazebo)/config/wifibot/gmapping_wifibot.launch"/-->
+</launch>

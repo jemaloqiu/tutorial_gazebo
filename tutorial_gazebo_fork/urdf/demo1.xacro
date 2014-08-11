@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<robot name="wifibot_model" xmlns:xacro="http://ros.org/wiki/xacro">
+  <property name="height1" value="0.2"/>
+  <property name="height2" value="0.6"/>
+
+  <link name="link1">	
+
+    <visual>
+      <origin xyz="0 0 0.0" rpy="0 0 0" />
+      <geometry>
+         <box size="0.5 0.5 ${height1}" />
+      </geometry>
+    </visual>
+
+    <collision> 
+      <origin xyz="0 0 0.0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.5 0.5 ${height1}" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="link2">
+    <visual>
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+      <geometry>
+		 <box size="0.2 0.2 ${height2}" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.0 0.0 0" rpy="0 0 0" />
+      <geometry>
+	<box size="0.2 0.2 ${height2}" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="joint_1_2" type="fixed">            
+    <origin xyz="0 0 ${0.5*height1+0.5*0.5*height1}" rpy="0 0 0" />           
+    <parent link="link1"/>		
+    <child link="link2" />
+  </joint>
+
+
+</robot>

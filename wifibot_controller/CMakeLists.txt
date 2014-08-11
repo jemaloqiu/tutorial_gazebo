@@ -2,13 +2,12 @@ cmake_minimum_required(VERSION 2.8.3)
 project(wifibot_controller)
 
 
-
-
 find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs)
 
 find_package(catkin REQUIRED COMPONENTS 
-  gazebo_plugins
-  gazebo_ros
+  urdf 
+  tf 
+  tf2_ros 
 )
 
 include_directories(/usr/local/include/gazebo-1.9)
@@ -40,7 +39,7 @@ catkin_package(
 ) 
 
 add_library(WifibotController src/wifibotController.cpp)
-# target_link_libraries(WifibotController thread)
+target_link_libraries(WifibotController ${catkin_LIBRARIES})
 
 
 
