@@ -62,9 +62,10 @@
       </link>
     </model>
     <physics type='ode'>
-      <max_step_size>0.001</max_step_size>
-      <real_time_factor>1</real_time_factor>
-      <real_time_update_rate>1000</real_time_update_rate>
+      <ode>
+        <solver type="quick" dt="0.001" iters="1000" sor="1.3"/>
+        <constraints cfm="0.0" erp="1.0" contact_max_correcting_vel="0.0" contact_surface_layer="0.0"/>
+      </ode>
       <gravity>0 0 -9.8</gravity>
     </physics>
     <scene>
@@ -119,7 +120,7 @@
       <pose>-5.0 14 0.0 1.57070 -0 0</pose>
       <link name='rack'>
         <inertial>
-          <pose>0.50 0.5 0.0 0 -0 0</pose>
+          <pose>3.50 0.5 0.0 0 -0 0</pose>
           <inertia>
             <ixx>2.05</ixx>
             <ixy>0</ixy>
@@ -177,8 +178,8 @@
       <static>1</static>
       <pose>5.0 14 0.00 1.57070 -0 0</pose>
       <link name='rack'>
-        <inertial>
-          <pose>0.50 0.5 0.0 0 -0 0</pose>
+        <inertial> 
+          <pose>3.50 0.5 0.0 0 -0 0</pose>
           <inertia>
             <ixx>2.05</ixx>
             <ixy>0</ixy>
@@ -237,7 +238,7 @@
       <pose>1.0 4.0 0.50 0 -0 0</pose>
       <link name='pal'>
         <inertial>
-          <pose>0.50 0.5 0.0 0 -0 0</pose>
+          <pose>1.150 0.8 0.0 0 -0 0</pose>
           <inertia>
             <ixx>20.05</ixx>
             <ixy>0</ixy>
@@ -246,9 +247,10 @@
             <iyz>0</iyz>
             <izz>20.05</izz>
           </inertia>
-          <mass>80</mass>
+          <mass>10</mass>
         </inertial>
-        <collision name='collision'>
+
+        <!--collision name='collision'>
           <pose>0.0 0.0 0.0 0 -0 0</pose>
           <geometry>
             <mesh>
@@ -261,12 +263,78 @@
             <bounce/>
             <friction>
               <ode>
-                <mu>100.01</mu>
-                <mu2>100.01</mu2>
+                <mu>1000000.01</mu>
+                <mu2>1000000.01</mu2>
               </ode>
             </friction>
             <contact>
-              <ode/>
+              <ode soft_erp="1" max_vel="0"/>
+            </contact>
+          </surface>
+        </collision-->
+
+       <collision name='collision0'>
+          <pose>1.150 0.8 0.12 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>2.3 1.6 0.04</size>
+            </box>
+          </geometry>
+          <max_contacts>40</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode>
+                <mu>1000000.01</mu>
+                <mu2>1000000.01</mu2>
+              </ode>
+            </friction>
+            <contact>
+              <ode soft_erp="1" max_vel="0"/>
+            </contact>
+          </surface>
+        </collision>
+
+        <collision name='collision1'>
+          <pose>0.05 0.8 0.1 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.1 1.6 0.20</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode>
+                <mu>1000000.01</mu>
+                <mu2>1000000.01</mu2>
+              </ode>
+            </friction>
+            <contact>
+              <ode soft_erp="1" max_vel="0"/>
+            </contact>
+          </surface>
+        </collision>
+
+        <collision name='collision2'>
+          <pose>2.25 0.8 0.1 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.1 1.6 0.20</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode>
+                <mu>1000000.01</mu>
+                <mu2>1000000.01</mu2>
+              </ode>
+            </friction>
+            <contact>
+              <ode soft_erp="1" max_vel="0"/>
             </contact>
           </surface>
         </collision>
@@ -281,7 +349,7 @@
           <material>
             <script>
               <uri>file://media/materials/scripts/gazebo.material</uri>
-              <name>Gazebo/Wood</name>
+              <name>Gazebo/WoodPallet</name>
             </script>
           </material>
           <cast_shadows>0</cast_shadows>
@@ -382,7 +450,7 @@
       <pose>-5.0 4.0 0.50 0 -0 1.5707</pose>
       <link name='pal'>
         <inertial>
-          <pose>0.50 0.5 0.0 0 -0 0</pose>
+          <pose>1.150 0.8 0.0 0 -0 0</pose>
           <inertia>
             <ixx>2.05</ixx>
             <ixy>0</ixy>
@@ -404,7 +472,10 @@
           <surface>
             <bounce/>
             <friction>
-              <ode/>
+              <ode>
+                <mu>1000000.01</mu>
+                <mu2>1000000.01</mu2>
+              </ode>
             </friction>
             <contact>
               <ode/>
@@ -421,7 +492,7 @@
           <material>
             <script>
               <uri>file://media/materials/scripts/gazebo.material</uri>
-              <name>Gazebo/Wood</name>
+              <name>Gazebo/WoodPallet</name>
             </script>
           </material>
           <cast_shadows>0</cast_shadows>
@@ -486,7 +557,7 @@
       <pose>-4.0 1.0 0.50 0 -0 0.75</pose>
       <link name='pal'>
         <inertial>
-          <pose>0.50 0.5 0.0 0 -0 0</pose>
+          <pose>1.150 0.8 0.0 0 -0 0</pose>
           <inertia>
             <ixx>2.05</ixx>
             <ixy>0</ixy>
@@ -508,7 +579,10 @@
           <surface>
             <bounce/>
             <friction>
-              <ode/>
+              <ode>
+                <mu>1000000.01</mu>
+                <mu2>1000000.01</mu2>
+              </ode>
             </friction>
             <contact>
               <ode/>
@@ -525,7 +599,7 @@
           <material>
             <script>
               <uri>file://media/materials/scripts/gazebo.material</uri>
-              <name>Gazebo/Wood</name>
+              <name>Gazebo/WoodPallet</name>
             </script>
           </material>
           <cast_shadows>0</cast_shadows>
@@ -590,7 +664,7 @@
       <pose>1.0 14.0 3.50 0 -0 0</pose>
       <link name='pal'>
         <inertial>
-          <pose>0.50 0.5 0.0 0 -0 0</pose>
+          <pose>1.150 0.8 0.0 0 -0 0</pose>
           <inertia>
             <ixx>2.05</ixx>
             <ixy>0</ixy>
@@ -629,7 +703,7 @@
           <material>
             <script>
               <uri>file://media/materials/scripts/gazebo.material</uri>
-              <name>Gazebo/Wood</name>
+              <name>Gazebo/WoodPallet</name>
             </script>
           </material>
           <cast_shadows>0</cast_shadows>
