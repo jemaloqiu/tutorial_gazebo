@@ -1,6 +1,11 @@
 <?xml version="1.0"?>
 <robot>
 
+	<gazebo>
+	  <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+		  <robotParam>/robot_description</robotParam>
+	  </plugin>
+	</gazebo>
 
 <!--gazebo reference="laser">
     <sensor type="gpu_ray" name="head_hokuyo_sensor">
@@ -41,6 +46,7 @@
         <topicName>cmd_vel</topicName>
     </plugin>
   </gazebo>
+
 
 </robot>
 

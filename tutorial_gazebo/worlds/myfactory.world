@@ -128,7 +128,7 @@
             <iyz>0</iyz>
             <izz>2.05</izz>
           </inertia>
-          <mass>2.5</mass>
+          <mass>125</mass>
         </inertial>
         <collision name='collision'>
           <geometry>
@@ -187,7 +187,7 @@
             <iyz>0</iyz>
             <izz>2.05</izz>
           </inertia>
-          <mass>2.5</mass>
+          <mass>125</mass>
         </inertial>
         <collision name='collision'>
           <geometry>
@@ -239,14 +239,14 @@
         <inertial>
           <pose>0.50 0.5 0.0 0 -0 0</pose>
           <inertia>
-            <ixx>2.05</ixx>
+            <ixx>20.05</ixx>
             <ixy>0</ixy>
             <ixz>0</ixz>
-            <iyy>2.05</iyy>
+            <iyy>20.05</iyy>
             <iyz>0</iyz>
-            <izz>2.05</izz>
+            <izz>20.05</izz>
           </inertia>
-          <mass>2.5</mass>
+          <mass>80</mass>
         </inertial>
         <collision name='collision'>
           <pose>0.0 0.0 0.0 0 -0 0</pose>
@@ -256,11 +256,14 @@
               <scale>0.02 0.02 0.02</scale>
             </mesh>
           </geometry>
-          <max_contacts>10</max_contacts>
+          <max_contacts>100</max_contacts>
           <surface>
             <bounce/>
             <friction>
-              <ode/>
+              <ode>
+                <mu>100.01</mu>
+                <mu2>100.01</mu2>
+              </ode>
             </friction>
             <contact>
               <ode/>
@@ -338,7 +341,10 @@
           <surface>
             <bounce/>
             <friction>
-              <ode/>
+              <ode>
+                <mu>100.01</mu>
+                <mu2>100.01</mu2>
+              </ode>
             </friction>
             <contact>
               <ode/>
@@ -385,7 +391,7 @@
             <iyz>0</iyz>
             <izz>2.05</izz>
           </inertia>
-          <mass>2.5</mass>
+          <mass>5</mass>
         </inertial>
         <collision name='collision'>
           <geometry>
@@ -489,7 +495,7 @@
             <iyz>0</iyz>
             <izz>2.05</izz>
           </inertia>
-          <mass>2.5</mass>
+          <mass>5</mass>
         </inertial>
         <collision name='collision'>
           <geometry>
@@ -593,7 +599,7 @@
             <iyz>0</iyz>
             <izz>2.05</izz>
           </inertia>
-          <mass>2.5</mass>
+          <mass>5</mass>
         </inertial>
         <collision name='collision'>
           <geometry>

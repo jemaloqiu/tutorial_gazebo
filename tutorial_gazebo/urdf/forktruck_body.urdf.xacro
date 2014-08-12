@@ -138,8 +138,11 @@
     </collision>
   </link>
 
-  <joint name="vplate_joint" type="fixed">
+  <joint name="vplate_joint" type="prismatic">
     <origin xyz=".10 -0.0 0.04" rpy="0 0 0"/>
+    <axis xyz="1 0 0" />
+    <limit effort="2000.0" lower="0" upper="0.6" velocity="0.2"/>
+    <dynamics damping="1000.0"/>
     <parent link="base_link"/>
     <child link="vplate"/>
   </joint>
@@ -227,13 +230,80 @@
     </collision>
   </link>
 
-  <joint name="fork_joint" type="fixed">
-    <origin xyz="0.0 0.0 -0.35" rpy="0 0 0"/>
+  <joint name="fork_joint" type="prismatic">
+    <origin xyz="0.0 0.0 -0.5" rpy="0 0 0"/>
     <axis xyz="0 0 1" />
-    <limit effort="10.0" lower="-0.35" upper="3.5" velocity="0.2"/>
+    <limit effort="2000.0" lower="0.0" upper="2.7" velocity="0.2"/>
     <dynamics damping="1000.0"/>
     <parent link="vplate"/>
     <child link="fork"/>
+  </joint>
+
+
+<link name="ltooth">
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="5" />
+      <inertia ixx="0.021" ixy="0.0" ixz="0.0"
+        iyy="0.021" iyz="0.0" izz="0.021" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.0"  rpy="${0.5*M_PI} ${0.0*M_PI} ${0.5*M_PI}" />
+      <geometry>
+        <mesh filename="package://tutorial_gazebo/meshes/folktruck_forktooth.stl" scale="${ratio} ${ratio} ${ratio}"/>
+      </geometry>
+      <material name="orange" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0.0"  rpy="${0.5*M_PI} ${0.0*M_PI} ${0.5*M_PI}" />
+      <geometry>
+        <mesh filename="package://tutorial_gazebo/meshes/folktruck_forktooth.stl" scale="${ratio} ${ratio} ${ratio}"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="ltooth_joint" type="prismatic">
+    <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+    <axis xyz="0 -1 0" />
+    <limit effort="500.0" lower="0.0" upper="0.5" velocity="0.2"/>
+    <dynamics damping="1000.0"/>
+    <parent link="fork"/>
+    <child link="ltooth"/>
+  </joint>
+
+
+<link name="rtooth">
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="5" />
+      <inertia ixx="0.021" ixy="0.0" ixz="0.0"
+        iyy="0.021" iyz="0.0" izz="0.021" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.0"  rpy="${0.5*M_PI} ${0.0*M_PI} ${0.5*M_PI}" />
+      <geometry>
+        <mesh filename="package://tutorial_gazebo/meshes/folktruck_forktooth.stl" scale="${ratio} ${ratio} ${ratio}"/>
+      </geometry>
+      <material name="orange" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0.0"  rpy="${0.5*M_PI} ${0.0*M_PI} ${0.5*M_PI}" />
+      <geometry>
+        <mesh filename="package://tutorial_gazebo/meshes/folktruck_forktooth.stl" scale="${ratio} ${ratio} ${ratio}"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="rtooth_joint" type="prismatic">
+    <origin xyz="0.0 -1.45 0.0" rpy="0 0 0"/>
+    <axis xyz="0 1 0" />
+    <limit effort="500.0" lower="0.0" upper="0.5" velocity="0.2"/>
+    <dynamics damping="1000.0"/>
+    <parent link="fork"/>
+    <child link="rtooth"/>
+    <mimic joint="ltooth_joint" multiplier="1" offset="0"/> 
   </joint>
 
 <link name="plate">
@@ -246,7 +316,7 @@
     <visual>
       <origin xyz="0 0 0.0" rpy="0 0 0"/>
       <geometry>
-        <box size="0.2 0.2 0.012" />
+        <box size="1.8 0.12 0.02" />
       </geometry>
       <material name="orange" />
     </visual>
@@ -260,8 +330,8 @@
   </link>
 
   <joint name="plate_joint" type="fixed">
-    <origin xyz="0.0 0 0.12" rpy="0 0 0"/>
-    <parent link="base_link"/>
+    <origin xyz="-0.45 0 -0.25" rpy="0 0 0"/>
+    <parent link="vplate"/>
     <child link="plate"/>
   </joint>
 
@@ -305,7 +375,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://tutorial_gazebo/meshes/hokuyo_utm_30lx.dae" scale="0.757 0.757 0.757"/>
+        <mesh filename="package://tutorial_gazebo/meshes/hokuyo_utm_30lx.dae" scale="0.757 0.757 0.757"/> 
       </geometry>
     </visual>
     <collision>
@@ -343,16 +413,41 @@
     <child link="laser" />
   </joint>
 
+  <transmission name="tran0">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="vplate_joint"/>
+    <actuator name="motor0">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
 
-  <!--transmission name="tran1">
+  <transmission name="tran1">
     <type>transmission_interface/SimpleTransmission</type>
     <joint name="fork_joint"/>
     <actuator name="motor1">
       <hardwareInterface>EffortJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
-  </transmission-->
+  </transmission>
 
+  <transmission name="tran2">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="ltooth_joint"/>
+    <actuator name="motor2">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran3">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="rtooth_joint"/>
+    <actuator name="motor3">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
 
 <!--Painting color for all the joints-->
   <gazebo reference="f_wheel_link">
@@ -384,6 +479,16 @@
   </gazebo>
   <gazebo reference="fork">
    <material>Gazebo/FlatBlack</material>
+  </gazebo>
+  <gazebo reference="ltooth">
+    <mu1>100.2</mu1>
+    <mu2>100.2</mu2>
+   <material>Gazebo/Green</material>
+  </gazebo>
+  <gazebo reference="rtooth">
+    <mu1>100.2</mu1>
+    <mu2>100.2</mu2>
+   <material>Gazebo/Red</material>
   </gazebo>
   </xacro:macro>
 </robot>
