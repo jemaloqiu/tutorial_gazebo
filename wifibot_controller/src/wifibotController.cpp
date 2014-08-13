@@ -229,7 +229,7 @@ void WifibotControllerPlugin::publish_odometry()
     joint_state.name[2] ="rotation_yaw";
     joint_state.position[2] = robotPose[2];
 
-  joint_pub_.publish(joint_state);
+  //joint_pub_.publish(joint_state);
 }
 
 void WifibotControllerPlugin::write_position_data()

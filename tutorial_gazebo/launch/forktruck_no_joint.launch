@@ -19,17 +19,9 @@
 
   <!-- Load the URDF into the ROS Parameter Server -->
   <param name="robot_description"
-	 command="$(find xacro)/xacro.py '$(find tutorial_gazebo)/urdf/forktruck.urdf.xacro'" />
+	 command="$(find xacro)/xacro.py '$(find tutorial_gazebo)/urdf/forktruck_no_joint.urdf.xacro'" />
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
 	args="-urdf -model forktruck -x 2.0 -y 1.0 -z 0.5 -param robot_description"/>
-
-
- <!-- Load joint controller configurations from YAML file to parameter server -->
-  <rosparam file="$(find tutorial_gazebo)/config/forktruck.yaml" command="load"/>
-
-  <!-- load the controllers -->
-  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
-	output="screen" ns="/" args="joint_state_controller joint1_position_controller joint2_position_controller joint3_position_controller joint4_position_controller joint5_position_controller"/>
 
    <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
 </launch>

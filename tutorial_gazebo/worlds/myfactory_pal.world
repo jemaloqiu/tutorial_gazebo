@@ -1,0 +1,854 @@
+<sdf version='1.4'>
+  <world name='default'>
+    <light name='sun' type='directional'>
+      <cast_shadows>1</cast_shadows>
+      <pose>0 0 10 0 -0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>0.5 0.1 -0.9</direction>
+    </light>
+    <model name='ground_plane'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>100</mu>
+                <mu2>50</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <cast_shadows>0</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grey</name>
+            </script>
+          </material>
+        </visual>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+    </model>
+    <physics type='ode'>
+      <ode>
+        <solver type="quick" dt="0.001" iters="1000" sor="1.3"/>
+        <constraints cfm="0.0" erp="1.0" contact_max_correcting_vel="0.0" contact_surface_layer="0.0"/>
+      </ode>
+      <gravity>0 0 -9.8</gravity>
+    </physics>
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>1</shadows>
+    </scene>
+    <model name='factory'>
+      <static>1</static>
+      <pose>-40 -40 -30.0 0 -0 0</pose>
+      <link name='walls'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/qiu/factory.stl</uri>
+              <scale>0.1 0.1 0.10</scale>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode/>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/qiu/factory.stl</uri>
+              <scale>0.10 0.10 0.10</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Brick</name>
+            </script>
+          </material>
+          <cast_shadows>0</cast_shadows>
+        </visual>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+    </model>
+
+<model name='shelf1'>
+      <static>1</static>
+      <pose>-5.0 14 0.0 1.57070 -0 0</pose>
+      <link name='rack'>
+        <inertial>
+          <pose>3.50 0.5 0.0 0 -0 0</pose>
+          <inertia>
+            <ixx>2.05</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>2.05</iyy>
+            <iyz>0</iyz>
+            <izz>2.05</izz>
+          </inertia>
+          <mass>125</mass>
+        </inertial>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/qiu/palette_rack.stl</uri>
+              <scale>0.0152 0.0152 0.015</scale>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode/>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/qiu/palette_rack.stl</uri>
+              <scale>0.0152 0.0152 0.015</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Gold</name>
+            </script>
+          </material>
+          <cast_shadows>0</cast_shadows>
+        </visual>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+    </model>
+
+<model name='shelf2'>
+      <static>1</static>
+      <pose>5.0 14 0.00 1.57070 -0 0</pose>
+      <link name='rack'>
+        <inertial> 
+          <pose>3.50 0.5 0.0 0 -0 0</pose>
+          <inertia>
+            <ixx>2.05</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>2.05</iyy>
+            <iyz>0</iyz>
+            <izz>2.05</izz>
+          </inertia>
+          <mass>125</mass>
+        </inertial>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/qiu/palette_rack.stl</uri>
+              <scale>0.0152 0.0152 0.0152</scale>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode/>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/qiu/palette_rack.stl</uri>
+              <scale>0.0152 0.0152 0.0152</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Gold</name>
+            </script>
+          </material>
+          <cast_shadows>0</cast_shadows>
+        </visual>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+    </model>
+
+
+
+<model name='palette0'>
+      <static>0</static>
+      <pose>1.0 4.0 0.50 0 -0 0</pose>
+      <link name='pal'>
+        <inertial>
+          <pose>1.150 0.8 0.0 0 -0 0</pose>
+          <inertia>
+            <ixx>20.05</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>20.05</iyy>
+            <iyz>0</iyz>
+            <izz>20.05</izz>
+          </inertia>
+          <mass>10</mass>
+        </inertial>
+
+        <!--collision name='collision'>
+          <pose>0.0 0.0 0.0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>file:///home/qiu/Palette.stl</uri>
+              <scale>0.02 0.02 0.02</scale>
+            </mesh>
+          </geometry>
+          <max_contacts>100</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode>
+                <mu>1000000.01</mu>
+                <mu2>1000000.01</mu2>
+              </ode>
+            </friction>
+            <contact>
+              <ode soft_erp="1" max_vel="0"/>
+            </contact>
+          </surface>
+        </collision-->
+
+       <collision name='collision0'>
+          <pose>1.150 0.8 0.12 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>2.3 1.6 0.04</size>
+            </box>
+          </geometry>
+          <max_contacts>40</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode>
+                <mu>1000000.01</mu>
+                <mu2>1000000.01</mu2>
+              </ode>
+            </friction>
+            <contact>
+              <ode soft_erp="1" max_vel="0"/>
+            </contact>
+          </surface>
+        </collision>
+
+        <collision name='collision1'>
+          <pose>0.05 0.8 0.1 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.1 1.6 0.20</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode>
+                <mu>1000000.01</mu>
+                <mu2>1000000.01</mu2>
+              </ode>
+            </friction>
+            <contact>
+              <ode soft_erp="1" max_vel="0"/>
+            </contact>
+          </surface>
+        </collision>
+
+        <collision name='collision2'>
+          <pose>2.25 0.8 0.1 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.1 1.6 0.20</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode>
+                <mu>1000000.01</mu>
+                <mu2>1000000.01</mu2>
+              </ode>
+            </friction>
+            <contact>
+              <ode soft_erp="1" max_vel="0"/>
+            </contact>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <pose>0.0 0.0 0.0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>file:///home/qiu/Palette.stl</uri>
+              <scale>0.02 0.02 0.02</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/WoodPallet</name>
+            </script>
+          </material>
+          <cast_shadows>0</cast_shadows>
+        </visual>
+
+        <visual name='rsymbol'>
+          <pose>0.15 0.0 0.150 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.16 0.04 0.250</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Red</name>
+            </script>
+          </material>
+        </visual>
+        <visual name='gsymbol'>
+          <pose>1.2 0.0 0.150 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.16 0.04 0.250</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Green</name>
+            </script>
+          </material>
+        </visual>
+        <visual name='bsymbol'>
+          <pose>2.25 0.0 0.150 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.16 0.04 0.250</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Blue</name>
+            </script>
+          </material>
+        </visual>
+
+        <collision name='box'>
+          <pose>1.2 0.8 0.60 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>2.0 1.2 0.60</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode>
+                <mu>100.01</mu>
+                <mu2>100.01</mu2>
+              </ode>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+        <visual name='visual1'>
+          <pose>1.2 0.8 0.60 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>2.0 1.2 0.60</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Wood</name>
+            </script>
+          </material>
+        </visual>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+    </model>
+
+
+
+<model name='palette1'>
+      <static>0</static>
+      <pose>-5.0 4.0 0.50 0 -0 1.5707</pose>
+     <link name='pal'>
+        <inertial>
+          <pose>1.150 0.8 0.0 0 -0 0</pose>
+          <inertia>
+            <ixx>20.05</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>20.05</iyy>
+            <iyz>0</iyz>
+            <izz>20.05</izz>
+          </inertia>
+          <mass>10</mass>
+        </inertial>
+
+        <!--collision name='collision'>
+          <pose>0.0 0.0 0.0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>file:///home/qiu/Palette.stl</uri>
+              <scale>0.02 0.02 0.02</scale>
+            </mesh>
+          </geometry>
+          <max_contacts>100</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode>
+                <mu>1000000.01</mu>
+                <mu2>1000000.01</mu2>
+              </ode>
+            </friction>
+            <contact>
+              <ode soft_erp="1" max_vel="0"/>
+            </contact>
+          </surface>
+        </collision-->
+
+       <collision name='collision0'>
+          <pose>1.150 0.8 0.12 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>2.3 1.6 0.04</size>
+            </box>
+          </geometry>
+          <max_contacts>40</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode>
+                <mu>1000000.01</mu>
+                <mu2>1000000.01</mu2>
+              </ode>
+            </friction>
+            <contact>
+              <ode soft_erp="1" max_vel="0"/>
+            </contact>
+          </surface>
+        </collision>
+
+        <collision name='collision1'>
+          <pose>0.05 0.8 0.1 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.1 1.6 0.20</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode>
+                <mu>1000000.01</mu>
+                <mu2>1000000.01</mu2>
+              </ode>
+            </friction>
+            <contact>
+              <ode soft_erp="1" max_vel="0"/>
+            </contact>
+          </surface>
+        </collision>
+
+        <collision name='collision2'>
+          <pose>2.25 0.8 0.1 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.1 1.6 0.20</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode>
+                <mu>1000000.01</mu>
+                <mu2>1000000.01</mu2>
+              </ode>
+            </friction>
+            <contact>
+              <ode soft_erp="1" max_vel="0"/>
+            </contact>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <pose>0.0 0.0 0.0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>file:///home/qiu/Palette.stl</uri>
+              <scale>0.02 0.02 0.02</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/WoodPallet</name>
+            </script>
+          </material>
+          <cast_shadows>0</cast_shadows>
+        </visual>
+
+        <visual name='rsymbol'>
+          <pose>0.15 0.0 0.150 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.16 0.04 0.250</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Red</name>
+            </script>
+          </material>
+        </visual>
+        <visual name='gsymbol'>
+          <pose>1.2 0.0 0.150 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.16 0.04 0.250</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Green</name>
+            </script>
+          </material>
+        </visual>
+        <visual name='bsymbol'>
+          <pose>2.25 0.0 0.150 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.16 0.04 0.250</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Blue</name>
+            </script>
+          </material>
+        </visual>
+
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+    </model>
+
+
+
+<model name='palette2'>
+      <static>0</static>
+      <pose>-4.0 1.0 0.50 0 -0 0.75</pose>
+      <link name='pal'>
+        <inertial>
+          <pose>1.150 0.8 0.0 0 -0 0</pose>
+          <inertia>
+            <ixx>2.05</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>2.05</iyy>
+            <iyz>0</iyz>
+            <izz>2.05</izz>
+          </inertia>
+          <mass>5</mass>
+        </inertial>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/qiu/Palette.stl</uri>
+              <scale>0.02 0.02 0.02</scale>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode>
+                <mu>1000000.01</mu>
+                <mu2>1000000.01</mu2>
+              </ode>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/qiu/Palette.stl</uri>
+              <scale>0.02 0.02 0.02</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/WoodPallet</name>
+            </script>
+          </material>
+          <cast_shadows>0</cast_shadows>
+        </visual>
+        <visual name='rsymbol'>
+          <pose>0.15 0.0 0.150 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.16 0.04 0.250</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Red</name>
+            </script>
+          </material>
+        </visual>
+        <visual name='gsymbol'>
+          <pose>1.2 0.0 0.150 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.16 0.04 0.250</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Green</name>
+            </script>
+          </material>
+        </visual>
+        <visual name='bsymbol'>
+          <pose>2.25 0.0 0.150 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.16 0.04 0.250</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Blue</name>
+            </script>
+          </material>
+        </visual>
+
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+    </model>
+
+
+
+<model name='palette3'>
+      <static>0</static>
+      <pose>1.0 14.0 3.50 0 -0 0</pose>
+      <link name='pal'>
+        <inertial>
+          <pose>1.150 0.8 0.0 0 -0 0</pose>
+          <inertia>
+            <ixx>2.05</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>2.05</iyy>
+            <iyz>0</iyz>
+            <izz>2.05</izz>
+          </inertia>
+          <mass>5</mass>
+        </inertial>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/qiu/Palette.stl</uri>
+              <scale>0.02 0.02 0.02</scale>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode/>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/qiu/Palette.stl</uri>
+              <scale>0.02 0.02 0.02</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/WoodPallet</name>
+            </script>
+          </material>
+          <cast_shadows>0</cast_shadows>
+        </visual>
+        <visual name='rsymbol'>
+          <pose>0.15 0.0 0.150 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.16 0.04 0.250</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Red</name>
+            </script>
+          </material>
+        </visual>
+        <visual name='gsymbol'>
+          <pose>1.2 0.0 0.150 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.16 0.04 0.250</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Green</name>
+            </script>
+          </material>
+        </visual>
+        <visual name='bsymbol'>
+          <pose>2.25 0.0 0.150 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.16 0.04 0.250</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Blue</name>
+            </script>
+          </material>
+        </visual>
+
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+    </model>
+
+
+    <state world_name='default'>
+      <sim_time>0 0</sim_time>
+      <real_time>0 28562</real_time>
+      <wall_time>1407657896 472561694</wall_time>
+    </state>
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose>89.5102 -17.5418 49.2494 -3.62784e-17 0.699643 2.48819</pose>
+        <view_controller>orbit</view_controller>
+      </camera>
+    </gui>
+  </world>
+</sdf>

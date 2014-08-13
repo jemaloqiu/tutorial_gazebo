@@ -43,29 +43,34 @@ class controllerGUI(wx.Frame):
         self.publishers = list()
         self.relaxers = list()
 
-        joints = ["vplate_joint", "fork_joint", "ltooth_joint", "rtooth_joint"]
+        joints = ["vplate_joint", "fork_joint", "tooth_joint", "camera_joint"]
 
         self.publishers.append(rospy.Publisher('joint1_position_controller/command', Float64))
         self.publishers.append(rospy.Publisher('joint2_position_controller/command', Float64))
         self.publishers.append(rospy.Publisher('joint3_position_controller/command', Float64))
         self.publishers.append(rospy.Publisher('joint4_position_controller/command', Float64))
-
+        self.publishers.append(rospy.Publisher('joint5_position_controller/command', Float64))
         i = 0
-        s = servoSlider(self, 0, 0.6, joints[0], i)
+        s = servoSlider(self, 0, 1.2, joints[i], i)
         servoSizer.Add(s.enabled,(i,0), wx.GBSpan(1,1),wx.ALIGN_CENTER_VERTICAL)   
         servoSizer.Add(s.position,(i,1), wx.GBSpan(1,1),wx.ALIGN_CENTER_VERTICAL)
         self.servos.append(s)
         i = 1
-        s = servoSlider(self, 0, 2.7, joints[0], i)
+        s = servoSlider(self, 0, 2.85, joints[i], i)
         servoSizer.Add(s.enabled,(i,0), wx.GBSpan(1,1),wx.ALIGN_CENTER_VERTICAL)   
         servoSizer.Add(s.position,(i,1), wx.GBSpan(1,1),wx.ALIGN_CENTER_VERTICAL)
         self.servos.append(s)
         i = 2
-        s = servoSlider(self, 0, 0.5, joints[0], i)
+        s = servoSlider(self, 0, 0.5, joints[i], i)
         servoSizer.Add(s.enabled,(i,0), wx.GBSpan(1,1),wx.ALIGN_CENTER_VERTICAL)   
         servoSizer.Add(s.position,(i,1), wx.GBSpan(1,1),wx.ALIGN_CENTER_VERTICAL)
         self.servos.append(s)
 
+        i = 3
+        s = servoSlider(self, -0.5, 2.35, joints[i], i)
+        servoSizer.Add(s.enabled,(i,0), wx.GBSpan(1,1),wx.ALIGN_CENTER_VERTICAL)   
+        servoSizer.Add(s.position,(i,1), wx.GBSpan(1,1),wx.ALIGN_CENTER_VERTICAL)
+        self.servos.append(s)
 
         # add everything
         servoBox.Add(servoSizer) 
@@ -126,6 +131,10 @@ class controllerGUI(wx.Frame):
               d.data = self.servos[2].getPosition()
               self.publishers[2].publish(d)
               self.publishers[3].publish(d)
+        if self.servos[3].enabled.IsChecked():
+              d = Float64()
+              d.data = self.servos[3].getPosition()
+              self.publishers[4].publish(d)
 
 
 if __name__ == '__main__':

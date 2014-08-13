@@ -165,7 +165,7 @@
     </collision>
   </link>
 
-  <joint name="vplate_joint" type="prismatic">
+  <joint name="vplate_joint" type="fixed">
     <origin xyz=".10 -0.0 0.04" rpy="0 0 0"/>
     <axis xyz="1 0 0" />
     <limit effort="2000.0" lower="0" upper="1.2" velocity="0.2"/>
@@ -257,7 +257,7 @@
     </collision>
   </link>
 
-  <joint name="fork_joint" type="prismatic">
+  <joint name="fork_joint" type="fixed">
     <origin xyz="0.0 0.0 -0.5" rpy="0 0 0"/>
     <axis xyz="0 0 1" />
     <limit effort="5000.0" lower="0.0" upper="2.85" velocity="0.2"/>
@@ -290,7 +290,7 @@
     </collision>
   </link>
 
-  <joint name="ltooth_joint" type="prismatic">
+  <joint name="ltooth_joint" type="fixed">
     <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
     <axis xyz="0 -1 0" />
     <limit effort="500.0" lower="0.0" upper="0.5" velocity="0.2"/>
@@ -323,7 +323,7 @@
     </collision>
   </link>
 
-  <joint name="rtooth_joint" type="prismatic">
+  <joint name="rtooth_joint" type="fixed">
     <origin xyz="0.0 -1.45 0.0" rpy="0 0 0"/>
     <axis xyz="0 1 0" />
     <limit effort="500.0" lower="0.0" upper="0.5" velocity="0.2"/>
@@ -415,7 +415,7 @@
     </inertial>
   </link>
 
-  <joint name="camera_joint" type="prismatic">
+  <joint name="camera_joint" type="fixed">
     <origin xyz="0.0 0.0 -0.0" rpy="0 0 0"/>
     <axis xyz="0 0 1" />
     <limit effort="50.0" lower="-0.20" upper="1.60" velocity="0.2"/>
